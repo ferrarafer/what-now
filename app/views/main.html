@@ -8,12 +8,21 @@
 </div>
 
 <div class="jumbotron">
+  <h1>Our task list</h1>
+  <ul>
+    <li ng-repeat="task in tasks">{{task.name}}</li>
+  </ul>
+
+  <form>
+    <input type="text" ng-model="newTask.name" placeholder="Your task here" />
+    <button ng-click="addTaskFromForm(newTask)">Add Task</button>
+  </form>
+</div>
+
   <h1>Testing d3</h1>
 
   <p>Here there should be something like a PERT chart:</p>
-
   <d3-pert />
-</div>
 
 <div class="footer">
   <p>♥ from the Yeoman team</p>

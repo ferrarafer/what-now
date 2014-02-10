@@ -4,8 +4,10 @@ angular.module('whatNowApp.directives', ['d3'])
 
     return {
       restrict: 'EA',
-      scope: { },
-      link: function (scope, element, attrs) {
+      scope: {
+        taskList: '='
+      },
+      link: function (scope, element) {
         var svg = d3Service.select(element[0]).append('svg');
 
         svg.attr('height', 100)
@@ -20,7 +22,7 @@ angular.module('whatNowApp.directives', ['d3'])
 
         circles.attr('cx', function (d, i) { return i * 50 + 25; })
           .attr('cy', 50)
-          .attr('r', function (d) { return d });
+          .attr('r', function (d) { return d; });
       }
     };
   }]);

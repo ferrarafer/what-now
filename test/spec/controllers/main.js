@@ -16,7 +16,49 @@ describe('Controller: MainCtrl', function () {
     });
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(scope.awesomeThings.length).toBe(3);
+  it('should attach a list of tasks to the scope', function () {
+    expect(scope.tasks).toBeDefined();
+  });
+  it('should attach a new task object to the scope', function() {
+    expect(scope.newTask).toBeDefined();
+  });
+
+  describe('addTask method', function() {
+    it('should be defined', function() {
+      expect(scope.addTask).toBeDefined();
+    });
+
+    it('should add a task to the task list when passed into it', function() {
+      var task = 'some task';
+      scope.addTask(task);
+
+      expect(scope.tasks.length).toBe(1);
+      expect(scope.tasks[0]).toBe(task);
+    });
+  });
+
+  describe('addTaskFromForm method', function() {
+    it('should be defined', function() {
+      expect(scope.addTaskFromForm).toBeDefined();
+    });
+
+    it('should add the new task defined in the newTask object', function() {
+      var testTask = { name: 'Testing' };
+      scope.newTask = testTask;
+
+      scope.addTaskFromForm();
+
+      expect(scope.tasks.length).toBe(1);
+      expect(scope.tasks[0]).toBe(testTask);
+    });
+
+    it('should unlink the newTask object from the recently added task', function() {
+      var testTask = { name: 'Testing' };
+      scope.newTask = testTask;
+
+      scope.addTaskFromForm();
+
+      expect(scope.newTask).not.toBe(testTask);
+    });
   });
 });
