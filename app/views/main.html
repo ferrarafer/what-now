@@ -10,7 +10,7 @@
 <div class="jumbotron">
   <h1>Our task list</h1>
   <ul>
-    <li ng-repeat="task in tasks">{{task.name}}</li>
+    <li ng-repeat="task in tasks">{{task.name}} <a ng-click="removeTask(task)">[x]</a></li>
   </ul>
 
   <form>

@@ -61,4 +61,20 @@ describe('Controller: MainCtrl', function () {
       expect(scope.newTask).not.toBe(testTask);
     });
   });
+
+  describe('removeTask method', function() {
+    it('should be defined', function() {
+      expect(scope.removeTask).toBeDefined();
+    });
+
+    it('should remove the passed task from the task list', function() {
+      var testTask = { name: 'Testing' };
+
+      scope.addTask(testTask);
+
+      scope.removeTask(testTask);
+
+      expect(scope.tasks.length).toBe(0);
+    });
+  });
 });
