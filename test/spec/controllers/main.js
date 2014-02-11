@@ -91,4 +91,66 @@ describe('Controller: MainCtrl', function () {
       expect(scope.tasks.length).toBe(0);
     });
   });
+
+  describe('buildGraphDependencies method', function() {
+    it('should be defined', function() {
+      expect(scope.buildGraphDependencies).toBeDefined();
+    });
+
+    it('should be called whenever adding a task', function() {
+      var wasCalled = false;
+      scope.buildGraphDependencies = function() { wasCalled = true; };
+
+      scope.addTask({ id: 0, name: 'test task', dependsOnText: '' });
+
+      expect(wasCalled).toBe(true);
+    });
+
+    it('should link tasks when passed task has the ID of another', function() {
+      scope.tasks = [{ id: 0, name: 'first task', dependsOnText: '', dependsOn: [] }];
+
+      scope.addTask({ id: 1, name: 'second task', dependsOnText: '0' });
+
+      expect(scope.tasks.length).toBe(2);
+      expect(scope.tasks[1].id).toBe(1);
+      expect(scope.tasks[1].dependsOn.length).toBe(1);
+      expect(scope.tasks[1].dependsOn[0]).toBe(scope.tasks[0]);
+    });
+
+    it('should initialize the dependsOn array of the passed task', function() {
+      var newTask = { id: 1, name: 'new task', dependsOnText: '' };
+
+      scope.buildGraphDependencies(newTask);
+
+      expect(newTask.dependsOn.length).toBe(0);
+    });
+
+    it('should support a list of dependencies in comma separated values', function() {
+      scope.tasks = [
+        { id: 0, name: 'first task', dependsOnText: '', dependsOn: [] },
+        { id: 1, name: 'second task', dependsOnText: '', dependsOn: [] },
+        { id: 2, name: 'third task', dependsOnText: '', dependsOn: [] }
+      ];
+
+      var newTask = { id: 3, name: 'depends on all', dependsOnText: '0,1,2' };
+      scope.addTask(newTask);
+
+      expect(newTask.dependsOn).toBeDefined();
+      expect(newTask.dependsOn.length).toBe(3);
+    });
+
+    it('should ignore spaces in the comma separated list', function() {
+      scope.tasks = [
+        { id: 0, name: 'first task', dependsOnText: '', dependsOn: [] },
+        { id: 1, name: 'second task', dependsOnText: '', dependsOn: [] },
+        { id: 2, name: 'third task', dependsOnText: '', dependsOn: [] }
+      ];
+
+      var newTask = { id: 3, name: 'depends on all', dependsOnText: '0, 1    ,           2       ' };
+      scope.addTask(newTask);
+
+      expect(newTask.dependsOn).toBeDefined();
+      expect(newTask.dependsOn.length).toBe(3);
+    });
+  });
 });

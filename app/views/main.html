@@ -26,7 +26,13 @@
 <p ng-hide="tasks.length">Nothing over here yet. Why don't you try adding some tasks?</p>
 
 <form ng-submit="addTaskFromForm(newTask)">
-  <input type="text" ng-model="newTask.name" placeholder="Your task here" required />
+  <label for="newTaskName">Name:</label>
+  <input type="text" name="newTaskName" ng-model="newTask.name" placeholder="Your task here" required />
+  <br />
+
+  <label for="newTaskDependsOnText">Depends on:</label>
+  <input type="text" name="newTaskDependsOnText" ng-model="newTask.dependsOnText" placeholder="IDs your task depends on" />
+  <br />
   <button>Add Task</button>
 </form>
 

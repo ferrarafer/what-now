@@ -7,6 +7,7 @@ angular.module('whatNowApp')
 
     $scope.addTask = function(task) {
       $scope.tasks.push(task);
+      $scope.buildGraphDependencies(task);
     };
 
     $scope.addTaskFromForm = function() {
@@ -20,6 +21,25 @@ angular.module('whatNowApp')
         if ($scope.tasks[index] === task) {
           $scope.tasks.splice(index, 1);
           break;
+        }
+      }
+    };
+
+    $scope.buildGraphDependencies = function(newTask) {
+      newTask.dependsOn = [];
+
+      var ids = newTask.dependsOnText ? newTask.dependsOnText.split(',') : [];
+      
+      for (var idIndex = 0; idIndex < ids.length; idIndex++) {
+        var dependsOnId = parseInt(ids[idIndex], 10);
+
+        // search for referenced task and link it
+        var index = $scope.tasks.length;
+        while (index--) {
+          if ($scope.tasks[index].id === dependsOnId) {
+            newTask.dependsOn.push($scope.tasks[index]);
+            break;
+          }
         }
       }
     };
