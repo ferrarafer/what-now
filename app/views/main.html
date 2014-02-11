@@ -12,12 +12,14 @@
   <thead>
     <th>ID</th>
     <th>Name</th>
+    <th>Dependencies</th>
     <th>Actions</th>
   </thead>
   <tbody>
     <tr ng-repeat="task in tasks">
       <td>{{task.id}}</td>
       <td>{{task.name}}</td>
+      <td>{{task.dependsOnText}}</td>
       <td><a title="Remove" ng-click="removeTask(task)">[Remove]</a></td>
     </tr>
   </tbody>
