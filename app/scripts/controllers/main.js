@@ -15,12 +15,19 @@ angular.module('whatNowApp')
       $scope.newTask = { id: $scope.newTask.id + 1 };
     };
 
-    $scope.removeTask = function(task) {
+    $scope.removeTask = function(taskToRemove) {
       var index = $scope.tasks.length;
       while (index--) {
-        if ($scope.tasks[index] === task) {
+        var task = $scope.tasks[index];
+        if (task === taskToRemove) {
           $scope.tasks.splice(index, 1);
-          break;
+        } else {
+          var dependencyIndex = task.dependsOn.length;
+          while (dependencyIndex--) {
+            if (task.dependsOn[dependencyIndex] === taskToRemove) {
+              task.dependsOn.splice(dependencyIndex, 1);
+            }
+          }
         }
       }
     };

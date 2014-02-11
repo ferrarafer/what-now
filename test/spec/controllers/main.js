@@ -90,6 +90,23 @@ describe('Controller: MainCtrl', function () {
 
       expect(scope.tasks.length).toBe(0);
     });
+
+    it('should remove tasks when they are dependent of others too', function() {
+      var task1 = { id: 0, name: 'first task', dependsOnText: '', dependsOn: [] };
+      var task2 = { id: 1, name: 'second task', dependsOnText: '', dependsOn: [task1] };
+      var task3 = { id: 2, name: 'third task', dependsOnText: '', dependsOn: [task1, task2] };
+
+      scope.tasks = [task1, task2, task3];
+
+      scope.removeTask(task1);
+
+      expect(scope.tasks[0]).toBe(task2);
+      expect(scope.tasks[1]).toBe(task3);
+
+      expect(task2.dependsOn.length).toBe(0);
+      expect(task3.dependsOn.length).toBe(1);
+      expect(task3.dependsOn[0]).toBe(task2);
+    });
   });
 
   describe('buildGraphDependencies method', function() {
