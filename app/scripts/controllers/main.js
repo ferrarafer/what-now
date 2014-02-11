@@ -3,7 +3,7 @@
 angular.module('whatNowApp')
   .controller('MainCtrl', function ($scope) {
     $scope.tasks = [];
-    $scope.newTask = {};
+    $scope.newTask = { id: 0 };
 
     $scope.addTask = function(task) {
       $scope.tasks.push(task);
@@ -11,7 +11,7 @@ angular.module('whatNowApp')
 
     $scope.addTaskFromForm = function() {
       $scope.addTask($scope.newTask);
-      $scope.newTask = {};
+      $scope.newTask = { id: $scope.newTask.id + 1 };
     };
 
     $scope.removeTask = function(task) {

@@ -7,20 +7,31 @@
   <h3 class="text-muted">what now</h3>
 </div>
 
-<div class="jumbotron">
-  <h1>Our task list</h1>
-  <ul>
-    <li ng-repeat="task in tasks">{{task.name}} <a title="Remove" ng-click="removeTask(task)">[x]</a></li>
-  </ul>
+<h1>Our task list</h1>
+<table style="width: 100%" ng-show="tasks.length">
+  <thead>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Actions</th>
+  </thead>
+  <tbody>
+    <tr ng-repeat="task in tasks">
+      <td>{{task.id}}</td>
+      <td>{{task.name}}</td>
+      <td><a title="Remove" ng-click="removeTask(task)">[Remove]</a></td>
+    </tr>
+  </tbody>
+</table>
 
-  <form ng-submit="addTaskFromForm(newTask)">
-    <input type="text" ng-model="newTask.name" placeholder="Your task here" required />
-    <button>Add Task</button>
-  </form>
-</div>
+<p ng-hide="tasks.length">Nothing over here yet. Why don't you try adding some tasks?</p>
+
+<form ng-submit="addTaskFromForm(newTask)">
+  <input type="text" ng-model="newTask.name" placeholder="Your task here" required />
+  <button>Add Task</button>
+</form>
 
 <d3-pert task-list="tasks"></d3-pert>
 
 <div class="footer">
-  <p>♥ from the Yeoman team</p>
+  <p>Alpha</p>
 </div>

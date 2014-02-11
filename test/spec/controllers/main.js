@@ -19,8 +19,15 @@ describe('Controller: MainCtrl', function () {
   it('should attach a list of tasks to the scope', function () {
     expect(scope.tasks).toBeDefined();
   });
-  it('should attach a new task object to the scope', function() {
-    expect(scope.newTask).toBeDefined();
+
+  describe('newTask object', function() {
+    it('should be defined', function() {
+      expect(scope.newTask).toBeDefined();
+    });
+
+    it('should start with an id of 0', function() {
+      expect(scope.newTask.id).toBe(0);
+    });
   });
 
   describe('addTask method', function() {
@@ -59,6 +66,13 @@ describe('Controller: MainCtrl', function () {
       scope.addTaskFromForm();
 
       expect(scope.newTask).not.toBe(testTask);
+    });
+
+    it('should increase the internal id of the new task each time a task is added', function() {
+      scope.newTask = { id: 1, name: 'My task' };
+      scope.addTaskFromForm();
+
+      expect(scope.newTask.id).toBe(2);
     });
   });
 
