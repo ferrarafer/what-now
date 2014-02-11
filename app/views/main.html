@@ -10,12 +10,12 @@
 <div class="jumbotron">
   <h1>Our task list</h1>
   <ul>
-    <li ng-repeat="task in tasks">{{task.name}} <a ng-click="removeTask(task)">[x]</a></li>
+    <li ng-repeat="task in tasks">{{task.name}} <a title="Remove" ng-click="removeTask(task)">[x]</a></li>
   </ul>
 
-  <form>
-    <input type="text" ng-model="newTask.name" placeholder="Your task here" />
-    <button ng-click="addTaskFromForm(newTask)">Add Task</button>
+  <form ng-submit="addTaskFromForm(newTask)">
+    <input type="text" ng-model="newTask.name" placeholder="Your task here" required />
+    <button>Add Task</button>
   </form>
 </div>
 
