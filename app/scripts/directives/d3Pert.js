@@ -7,7 +7,7 @@ angular.module('whatNowApp.directives', ['d3'])
 
     function drawLayer(layer, layerNumber) {
       var groups = svg.selectAll('g')
-        .data(layer, function (d) { return d.name; })
+        .data(layer, function (d) { return d.id; })
         .enter()
         .append('g')
         .attr('transform', function(d, i) {
@@ -16,14 +16,16 @@ angular.module('whatNowApp.directives', ['d3'])
           return 'translate(' + x + ', ' + y + ')';
         });
 
-      var circles = groups.append('circle')
+      /*var circles = */
+      groups.append('circle')
         .attr({
           cx: 0,
           cy: 0,
-          r: function(d) { return d.name.length; },
+          r: 5
         });
 
-      var labels = groups.append('text')
+      /*var labels = */
+      groups.append('text')
         .text(function(d) { return d.name; })
         .attr({
           fill: 'black',
