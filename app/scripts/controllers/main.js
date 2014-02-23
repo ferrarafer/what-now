@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('whatNowApp')
-  .controller('MainCtrl', ['$scope', 'dependencyResolutionService',
-    function ($scope, dependencyResolutionService) {
+  .controller('MainCtrl', ['$scope',
+    function ($scope) {
       $scope.tasks = [];
       $scope.newTask = { id: 0 };
 
