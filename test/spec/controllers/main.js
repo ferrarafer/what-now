@@ -25,8 +25,8 @@ describe('Controller: MainCtrl', function () {
       expect(scope.newTask).toBeDefined();
     });
 
-    it('should start with an id of 0', function() {
-      expect(scope.newTask.id).toBe(0);
+    it('should start with an id of 1', function() {
+      expect(scope.newTask.id).toBe(1);
     });
   });
 
