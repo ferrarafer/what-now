@@ -4,15 +4,34 @@ angular.module('whatNowApp.directives', ['d3'])
     'use strict';
 
     var svg;
+    var taskPositions;
 
-    function drawLayer(layer, layerNumber) {
+    function recalculateTasksPositions (taskLayers) {
+      taskPositions = {};
+      var x = 0;
+      var y = 0;
+
+      angular.forEach(taskLayers, function (layer) {
+        x += 50;
+
+        angular.forEach(layer, function (task) {
+          y += 50;
+
+          taskPositions[task.id] = { x: x, y: y };
+        });
+
+        y = 0;
+      });
+    }
+
+    function drawLayer (layer) {
       var groups = svg.selectAll('g')
         .data(layer, function (d) { return d.id; })
         .enter()
         .append('g')
-        .attr('transform', function(d, i) {
-          var x = layerNumber * 50 + 25;
-          var y = 50 * (i + 1);
+        .attr('transform', function(d) {
+          var x = taskPositions[d.id].x;
+          var y = taskPositions[d.id].y;
           return 'translate(' + x + ', ' + y + ')';
         });
 
@@ -44,14 +63,15 @@ angular.module('whatNowApp.directives', ['d3'])
       $scope.$watchCollection('taskList', redraw);
     }
 
-    function redraw(taskList) {
+    function redraw (taskList) {
       var layeredTasks = dependencyResolutionService.arrangeInLayers(taskList);
+      recalculateTasksPositions(layeredTasks);
 
       svg.selectAll('*').remove();
 
-      for (var i = 0; i < layeredTasks.length; i++) {
-        drawLayer(layeredTasks[i], i + 1);
-      }
+      angular.forEach(layeredTasks, function (layer) {
+        drawLayer(layer);
+      });
     }
 
     return {
